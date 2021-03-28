@@ -19,18 +19,17 @@ ROS3D.MeshResource = function(options) {
   THREE.Object3D.call(this);
   var that = this;
   options = options || {};
-  var path = options.path || '/';
+  var path = options.path;
   var resource = options.resource;
   var material = options.material || null;
   this.warnings = options.warnings;
 
-
   // check for a trailing '/'
-  if (path.substr(path.length - 1) !== '/') {
+  if (path && path.substr(path.length - 1) !== '/') {
     path += '/';
   }
 
-  var uri = path + resource;
+  var uri = path ? path + resource : resource
   var fileType = uri.substr(-3).toLowerCase();
 
   // check the type

@@ -16,11 +16,11 @@ ROS3D.Marker = function(options) {
   THREE.Object3D.call(this);
 
   options = options || {};
-  var path = options.path || '/';
+  var path = options.path;
   var message = options.message;
 
   // check for a trailing '/'
-  if (path.substr(path.length - 1) !== '/') {
+  if (path && path.substr(path.length - 1) !== '/') {
     path += '/';
   }
 
@@ -305,7 +305,12 @@ ROS3D.Marker = function(options) {
          message.color.b !== 0 || message.color.a !== 0) {
         meshColorMaterial = colorMaterial;
       }
-      this.msgMesh = message.mesh_resource.substr(10);
+      if (path && message.mesh_resource.substr(0, 10) === 'package://') {
+        this.msgMesh = message.mesh_resource.substr(10);
+      } else {
+        this.msgMesh = message.mesh_resource;
+        path = null
+      }
       var meshResource = new ROS3D.MeshResource({
         path : path,
         resource :  this.msgMesh,

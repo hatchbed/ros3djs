@@ -25,7 +25,7 @@ ROS3D.MarkerArrayClient = function(options) {
   this.topicName = options.topic;
   this.tfClient = options.tfClient;
   this.rootObject = options.rootObject || new THREE.Object3D();
-  this.path = options.path || '/';
+  this.path = options.path;
 
   // Markers that are displayed (Map ns+id--Marker)
   this.markers = {};
