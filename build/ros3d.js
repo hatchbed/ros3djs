@@ -51894,18 +51894,17 @@ class MeshResource extends THREE$1.Object3D {
   constructor(options) {
     super();
     options = options || {};
-    var path = options.path || '/';
+    var path = options.path;
     var resource = options.resource;
     var material = options.material || null;
     this.warnings = options.warnings;
 
-
     // check for a trailing '/'
-    if (path.substr(path.length - 1) !== '/') {
+    if (path && path.substr(path.length - 1) !== '/') {
       path += '/';
     }
 
-    var uri = path + resource;
+    var uri = path ? path + resource : resource;
     var fileType = uri.substr(-3).toLowerCase();
 
     // check the type
@@ -52018,11 +52017,11 @@ class Marker extends THREE$1.Object3D {
     super();
 
     options = options || {};
-    var path = options.path || '/';
+    var path = options.path;
     var message = options.message;
 
     // check for a trailing '/'
-    if (path.substr(path.length - 1) !== '/') {
+    if (path && path.substr(path.length - 1) !== '/') {
       path += '/';
     }
 
@@ -52307,7 +52306,12 @@ class Marker extends THREE$1.Object3D {
            message.color.b !== 0 || message.color.a !== 0) {
           meshColorMaterial = colorMaterial;
         }
-        this.msgMesh = message.mesh_resource.substr(10);
+        if (path && message.mesh_resource.substr(0, 10) === 'package://') {
+          this.msgMesh = message.mesh_resource.substr(10);
+        } else {
+          this.msgMesh = message.mesh_resource;
+          path = null;
+        }
         var meshResource = new MeshResource({
           path : path,
           resource :  this.msgMesh,
@@ -54585,7 +54589,7 @@ class MarkerArrayClient extends eventemitter2 {
     this.topicName = options.topic;
     this.tfClient = options.tfClient;
     this.rootObject = options.rootObject || new THREE$1.Object3D();
-    this.path = options.path || '/';
+    this.path = options.path;
 
     // Markers that are displayed (Map ns+id--Marker)
     this.markers = {};
@@ -54700,7 +54704,7 @@ class MarkerClient extends eventemitter2 {
     this.topicName = options.topic;
     this.tfClient = options.tfClient;
     this.rootObject = options.rootObject || new THREE$1.Object3D();
-    this.path = options.path || '/';
+    this.path = options.path || '';
     this.lifetime = options.lifetime || 0;
 
     // Markers that are displayed (Map ns+id--Marker)

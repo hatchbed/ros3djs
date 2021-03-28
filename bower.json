@@ -7,7 +7,7 @@
   "main": "./src/Ros3D.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RobotWebTools/ros3djs/releases"
+    "url": "https://github.com/hatchbed/ros3djs/releases"
   },
   "keywords": [
     "ROS",
