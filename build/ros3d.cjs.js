@@ -52282,6 +52282,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
           resource :  this.msgMesh,
           material : meshColorMaterial,
         });
+        meshResource.scale.set(message.scale.x, message.scale.y, message.scale.z);
         this.add(meshResource);
         break;
       case MARKER_TRIANGLE_LIST:

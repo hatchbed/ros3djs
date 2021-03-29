@@ -316,6 +316,7 @@ ROS3D.Marker = function(options) {
         resource :  this.msgMesh,
         material : meshColorMaterial,
       });
+      meshResource.scale.set(message.scale.x, message.scale.y, message.scale.z);
       this.add(meshResource);
       break;
     case ROS3D.MARKER_TRIANGLE_LIST:
