@@ -50663,7 +50663,7 @@ var Arrow = /*@__PURE__*/(function (superclass) {
     // create the head
     var coneGeometry = new THREE$1.CylinderGeometry(0, headDiameter * 0.5, headLength, 12, 1);
     m.setPosition(new THREE$1.Vector3(0, shaftLength + (headLength * 0.5), 0));
-    coneGeometry.applyMatrix(m);
+    coneGeometry.applyMatrix4(m);
 
     // put the arrow together
     geometry.merge(coneGeometry);
@@ -50904,12 +50904,12 @@ THREE$1.STLLoader.prototype = {
 
       }
 
-      geometry.addAttribute('position', new THREE$1.BufferAttribute(new Float32Array(vertices), 3));
-      geometry.addAttribute('normal', new THREE$1.BufferAttribute(new Float32Array(normals), 3));
+      geometry.setAttribute('position', new THREE$1.BufferAttribute(new Float32Array(vertices), 3));
+      geometry.setAttribute('normal', new THREE$1.BufferAttribute(new Float32Array(normals), 3));
 
       if (hasColors) {
 
-        geometry.addAttribute('color', new THREE$1.BufferAttribute(new Float32Array(colors), 3));
+        geometry.setAttribute('color', new THREE$1.BufferAttribute(new Float32Array(colors), 3));
         geometry.hasColors = true;
         geometry.alpha = alpha;
 
@@ -50980,8 +50980,8 @@ THREE$1.STLLoader.prototype = {
 
       }
 
-      geometry.addAttribute('position', new THREE$1.Float32BufferAttribute(vertices, 3));
-      geometry.addAttribute('normal', new THREE$1.Float32BufferAttribute(normals, 3));
+      geometry.setAttribute('position', new THREE$1.Float32BufferAttribute(vertices, 3));
+      geometry.setAttribute('normal', new THREE$1.Float32BufferAttribute(normals, 3));
 
       return geometry;
 
@@ -51694,11 +51694,11 @@ THREE$1.OBJLoader.prototype = {
 
 			var buffergeometry = new THREE$1.BufferGeometry();
 
-			buffergeometry.addAttribute( 'position', new THREE$1.Float32BufferAttribute( geometry.vertices, 3 ) );
+			buffergeometry.setAttribute( 'position', new THREE$1.Float32BufferAttribute( geometry.vertices, 3 ) );
 
 			if ( geometry.normals.length > 0 ) {
 
-				buffergeometry.addAttribute( 'normal', new THREE$1.Float32BufferAttribute( geometry.normals, 3 ) );
+				buffergeometry.setAttribute( 'normal', new THREE$1.Float32BufferAttribute( geometry.normals, 3 ) );
 
 			} else {
 
@@ -51709,13 +51709,13 @@ THREE$1.OBJLoader.prototype = {
 			if ( geometry.colors.length > 0 ) {
 
 				hasVertexColors = true;
-				buffergeometry.addAttribute( 'color', new THREE$1.Float32BufferAttribute( geometry.colors, 3 ) );
+				buffergeometry.setAttribute( 'color', new THREE$1.Float32BufferAttribute( geometry.colors, 3 ) );
 
 			}
 
 			if ( geometry.uvs.length > 0 ) {
 
-				buffergeometry.addAttribute( 'uv', new THREE$1.Float32BufferAttribute( geometry.uvs, 2 ) );
+				buffergeometry.setAttribute( 'uv', new THREE$1.Float32BufferAttribute( geometry.uvs, 2 ) );
 
 			}
 
