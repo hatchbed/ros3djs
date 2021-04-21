@@ -54025,13 +54025,13 @@ THREE$1.ColladaLoader.prototype = {
 
       // build geometry
 
-      if (position.array.length > 0) geometry.addAttribute('position', new THREE$1.Float32BufferAttribute(position.array, position.stride));
-      if (normal.array.length > 0) geometry.addAttribute('normal', new THREE$1.Float32BufferAttribute(normal.array, normal.stride));
-      if (color.array.length > 0) geometry.addAttribute('color', new THREE$1.Float32BufferAttribute(color.array, color.stride));
-      if (uv.array.length > 0) geometry.addAttribute('uv', new THREE$1.Float32BufferAttribute(uv.array, uv.stride));
+      if (position.array.length > 0) geometry.setAttribute('position', new THREE$1.Float32BufferAttribute(position.array, position.stride));
+      if (normal.array.length > 0) geometry.setAttribute('normal', new THREE$1.Float32BufferAttribute(normal.array, normal.stride));
+      if (color.array.length > 0) geometry.setAttribute('color', new THREE$1.Float32BufferAttribute(color.array, color.stride));
+      if (uv.array.length > 0) geometry.setAttribute('uv', new THREE$1.Float32BufferAttribute(uv.array, uv.stride));
 
-      if (skinIndex.array.length > 0) geometry.addAttribute('skinIndex', new THREE$1.Float32BufferAttribute(skinIndex.array, skinIndex.stride));
-      if (skinWeight.array.length > 0) geometry.addAttribute('skinWeight', new THREE$1.Float32BufferAttribute(skinWeight.array, skinWeight.stride));
+      if (skinIndex.array.length > 0) geometry.setAttribute('skinIndex', new THREE$1.Float32BufferAttribute(skinIndex.array, skinIndex.stride));
+      if (skinWeight.array.length > 0) geometry.setAttribute('skinWeight', new THREE$1.Float32BufferAttribute(skinWeight.array, skinWeight.stride));
 
       build.data = geometry;
       build.type = primitives[0].type;
