@@ -55769,20 +55769,17 @@ class Marker extends THREE$1.Object3D {
         this.add(cylinderMesh);
         break;
       case MARKER_LINE_STRIP:
-        var lineStripGeom = new THREE$1.BufferGeometry();
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
           size : message.scale.x
         });
 
         // add the points
+        const strip_points = [];
         var j;
         for ( j = 0; j < message.points.length; j++) {
-          var pt = new THREE$1.Vector3();
-          pt.x = message.points[j].x;
-          pt.y = message.points[j].y;
-          pt.z = message.points[j].z;
-          lineStripGeom.vertices.push(pt);
+          strip_points.push(new THREE$1.Vector3(message.points[j].x, message.points[j].y, message.points[j].z));
         }
+        var lineStripGeom = new THREE$1.BufferGeometry().setFromPoints(strip_points);
 
         // determine the colors for each
         if (message.colors.length === message.points.length) {
@@ -55800,20 +55797,17 @@ class Marker extends THREE$1.Object3D {
         this.add(new THREE$1.Line(lineStripGeom, lineStripMaterial));
         break;
       case MARKER_LINE_LIST:
-        var lineListGeom = new THREE$1.BufferGeometry();
         var lineListMaterial = new THREE$1.LineBasicMaterial({
           size : message.scale.x
         });
 
         // add the points
+        const list_points = [];
         var k;
         for ( k = 0; k < message.points.length; k++) {
-          var v = new THREE$1.Vector3();
-          v.x = message.points[k].x;
-          v.y = message.points[k].y;
-          v.z = message.points[k].z;
-          lineListGeom.vertices.push(v);
+          list_points.push(new THREE$1.Vector3(message.points[k].x, message.points[k].y, message.points[k].z));
         }
+        const lineListGeom = new THREE$1.BufferGeometry().setFromPoints(list_points);
 
         // determine the colors for each
         if (message.colors.length === message.points.length) {

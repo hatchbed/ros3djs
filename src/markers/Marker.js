@@ -97,20 +97,17 @@ ROS3D.Marker = function(options) {
       this.add(cylinderMesh);
       break;
     case ROS3D.MARKER_LINE_STRIP:
-      var lineStripGeom = new THREE.BufferGeometry();
       var lineStripMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
 
       // add the points
+      const strip_points = [];
       var j;
       for ( j = 0; j < message.points.length; j++) {
-        var pt = new THREE.Vector3();
-        pt.x = message.points[j].x;
-        pt.y = message.points[j].y;
-        pt.z = message.points[j].z;
-        lineStripGeom.vertices.push(pt);
+        strip_points.push(new THREE.Vector3(message.points[j].x, message.points[j].y, message.points[j].z));
       }
+      var lineStripGeom = new THREE.BufferGeometry().setFromPoints(strip_points);
 
       // determine the colors for each
       if (message.colors.length === message.points.length) {
@@ -128,20 +125,17 @@ ROS3D.Marker = function(options) {
       this.add(new THREE.Line(lineStripGeom, lineStripMaterial));
       break;
     case ROS3D.MARKER_LINE_LIST:
-      var lineListGeom = new THREE.BufferGeometry();
       var lineListMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
 
       // add the points
+      const list_points = [];
       var k;
       for ( k = 0; k < message.points.length; k++) {
-        var v = new THREE.Vector3();
-        v.x = message.points[k].x;
-        v.y = message.points[k].y;
-        v.z = message.points[k].z;
-        lineListGeom.vertices.push(v);
+        list_points.push(new THREE.Vector3(message.points[k].x, message.points[k].y, message.points[k].z));
       }
+      const lineListGeom = new THREE.BufferGeometry().setFromPoints(list_points);
 
       // determine the colors for each
       if (message.colors.length === message.points.length) {
