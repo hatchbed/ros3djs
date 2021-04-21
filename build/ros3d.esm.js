@@ -50540,16 +50540,17 @@ var DepthCloud = /*@__PURE__*/(function (superclass) {
 
     if (this.metaLoaded) {
       this.texture = new THREE$1.Texture(this.video);
-      this.geometry = new THREE$1.Geometry();
 
+      var points = [];
       for (var i = 0, l = this.width * this.height; i < l; i++) {
 
         var vertex = new THREE$1.Vector3();
         vertex.x = (i % this.width);
         vertex.y = Math.floor(i / this.width);
 
-        this.geometry.vertices.push(vertex);
+        points.push(vertex);
       }
+      this.geometry = new THREE$1.BufferGeometry().setFromPoints(points);
 
       this.material = new THREE$1.ShaderMaterial({
         uniforms : {
@@ -56073,10 +56074,11 @@ var TriangleList = /*@__PURE__*/(function (superclass) {
     material.side = THREE$1.DoubleSide;
 
     // construct the geometry
-    var geometry = new THREE$1.Geometry();
+    var points = [];
     for (i = 0; i < vertices.length; i++) {
-      geometry.vertices.push(new THREE$1.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
+      points.push(new THREE$1.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
     }
+    var geometry = new THREE$1.BufferGeometry().setFromPoints(points);
 
     // set the colors
     var i, j;
@@ -56342,20 +56344,17 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_POINTS:
         // for now, use a particle system for the lists
-        var geometry = new THREE$1.Geometry();
         var material = new THREE$1.ParticleBasicMaterial({
           size : message.scale.x
         });
 
         // add the points
+        var points = [];
         var i;
         for ( i = 0; i < message.points.length; i++) {
-          var vertex = new THREE$1.Vector3();
-          vertex.x = message.points[i].x;
-          vertex.y = message.points[i].y;
-          vertex.z = message.points[i].z;
-          geometry.vertices.push(vertex);
+          points.push(new THREE$1.Vector3(message.points[i].x, message.points[i].y, message.points[i].z));
         }
+        var geometry = new THREE$1.BufferGeometry().setFromPoints(points);
 
         // determine the colors for each
         if (message.colors.length === message.points.length) {
@@ -58944,16 +58943,12 @@ var Grid = /*@__PURE__*/(function (superclass) {
     for (var i = 0; i <= num_cells; ++i) {
       var edge = cellSize * num_cells / 2;
       var position = edge - (i * cellSize);
-      var geometryH = new THREE$1.Geometry();
-      geometryH.vertices.push(
+      var geometryH = new THREE$1.BufferGeometry().setFromPoints([
         new THREE$1.Vector3( -edge, position, 0 ),
-        new THREE$1.Vector3( edge, position, 0 )
-      );
-      var geometryV = new THREE$1.Geometry();
-      geometryV.vertices.push(
+        new THREE$1.Vector3( edge, position, 0 )]);
+      var geometryV = new THREE$1.BufferGeometry().setFromPoints([
         new THREE$1.Vector3( position, -edge, 0 ),
-        new THREE$1.Vector3( position, edge, 0 )
-      );
+        new THREE$1.Vector3( position, edge, 0 )]);
       this.add(new THREE$1.Line(geometryH, material));
       this.add(new THREE$1.Line(geometryV, material));
     }

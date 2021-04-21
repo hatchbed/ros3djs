@@ -236,16 +236,17 @@ ROS3D.DepthCloud.prototype.initStreamer = function() {
 
   if (this.metaLoaded) {
     this.texture = new THREE.Texture(this.video);
-    this.geometry = new THREE.Geometry();
 
+    const points = []
     for (var i = 0, l = this.width * this.height; i < l; i++) {
 
       var vertex = new THREE.Vector3();
       vertex.x = (i % this.width);
       vertex.y = Math.floor(i / this.width);
 
-      this.geometry.vertices.push(vertex);
+      points.push(vertex);
     }
+    this.geometry = new THREE.BufferGeometry().setFromPoints(points);
 
     this.material = new THREE.ShaderMaterial({
       uniforms : {

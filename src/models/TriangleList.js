@@ -24,10 +24,11 @@ ROS3D.TriangleList = function(options) {
   material.side = THREE.DoubleSide;
 
   // construct the geometry
-  var geometry = new THREE.Geometry();
+  const points = []
   for (i = 0; i < vertices.length; i++) {
-    geometry.vertices.push(new THREE.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
+    points.push(new THREE.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
   }
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
   // set the colors
   var i, j;

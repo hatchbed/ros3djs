@@ -107,7 +107,7 @@ ROS3D.Marker = function(options) {
       for ( j = 0; j < message.points.length; j++) {
         strip_points.push(new THREE.Vector3(message.points[j].x, message.points[j].y, message.points[j].z));
       }
-      var lineStripGeom = new THREE.BufferGeometry().setFromPoints(strip_points);
+      const lineStripGeom = new THREE.BufferGeometry().setFromPoints(strip_points);
 
       // determine the colors for each
       if (message.colors.length === message.points.length) {
@@ -218,20 +218,17 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_POINTS:
       // for now, use a particle system for the lists
-      var geometry = new THREE.Geometry();
       var material = new THREE.ParticleBasicMaterial({
         size : message.scale.x
       });
 
       // add the points
+      const points = []
       var i;
       for ( i = 0; i < message.points.length; i++) {
-        var vertex = new THREE.Vector3();
-        vertex.x = message.points[i].x;
-        vertex.y = message.points[i].y;
-        vertex.z = message.points[i].z;
-        geometry.vertices.push(vertex);
+        points.push(new THREE.Vector3(message.points[i].x, message.points[i].y, message.points[i].z));
       }
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
       // determine the colors for each
       if (message.colors.length === message.points.length) {
