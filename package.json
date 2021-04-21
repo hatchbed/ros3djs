@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build": "grunt build",
-    "prepack": "grunt build",
+    "postinstall": "grunt build",
     "lint": "grunt lint",
     "lint-fix": "grunt lint-fix",
     "transpile": "DEBUG=* grunt transpile"
