@@ -52450,7 +52450,7 @@ THREE$1.ColladaLoader.prototype = {
 
     var scope = this;
 
-    var path = THREE$1.Loader.prototype.extractUrlBase(url);
+    var path = THREE$1.LoaderUtils.extractUrlBase(url);
 
     var loader = new THREE$1.FileLoader(scope.manager);
     loader.load(url, function (text) {
@@ -56221,7 +56221,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         this.add(cylinderMesh);
         break;
       case MARKER_LINE_STRIP:
-        var lineStripGeom = new THREE$1.Geometry();
+        var lineStripGeom = new THREE$1.BufferGeometry();
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
           size : message.scale.x
         });
@@ -56252,7 +56252,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         this.add(new THREE$1.Line(lineStripGeom, lineStripMaterial));
         break;
       case MARKER_LINE_LIST:
-        var lineListGeom = new THREE$1.Geometry();
+        var lineListGeom = new THREE$1.BufferGeometry();
         var lineListMaterial = new THREE$1.LineBasicMaterial({
           size : message.scale.x
         });
@@ -56280,7 +56280,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         }
 
         // add the line
-        this.add(new THREE$1.Line(lineListGeom, lineListMaterial,THREE$1.LinePieces));
+        this.add(new THREE$1.LineSegments(lineListGeom, lineListMaterial));
         break;
       case MARKER_CUBE_LIST:
         // holds the main object
