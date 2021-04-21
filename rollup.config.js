@@ -47,7 +47,11 @@ export default [
     plugins: [
       resolve({ browser: true }),
       commonjs(),
-      buble(),
+      buble({
+        transforms: {
+          dangerousForOf: true,
+          asyncAwait: false,
+        }}),
       filesize(),
     ],
   },
@@ -68,7 +72,11 @@ export default [
     plugins: [
       resolve({ browser: true }),
       commonjs(),
-      buble(),
+      buble({
+        transforms: {
+          dangerousForOf: true,
+          asyncAwait: false,
+        }}),
       filesize(),
     ],
   },
