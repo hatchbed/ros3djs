@@ -50658,7 +50658,7 @@ var Arrow = /*@__PURE__*/(function (superclass) {
         12, 1);
     var m = new THREE$1.Matrix4();
     m.setPosition(new THREE$1.Vector3(0, shaftLength * 0.5, 0));
-    geometry.applyMatrix(m);
+    geometry.applyMatrix4(m);
 
     // create the head
     var coneGeometry = new THREE$1.CylinderGeometry(0, headDiameter * 0.5, headLength, 12, 1);
@@ -59751,7 +59751,7 @@ var Points$1 = /*@__PURE__*/(function (superclass) {
           this.geom = new THREE$1.BufferGeometry();
 
           this.positions = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-          this.geom.addAttribute( 'position', this.positions.setDynamic(true) );
+          this.geom.setAttribute( 'position', this.positions.setDynamic(true) );
 
           if(!this.colorsrc && this.fields.rgb) {
               this.colorsrc = 'rgb';
@@ -59760,7 +59760,7 @@ var Points$1 = /*@__PURE__*/(function (superclass) {
               var field = this.fields[this.colorsrc];
               if (field) {
                   this.colors = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-                  this.geom.addAttribute( 'color', this.colors.setDynamic(true) );
+                  this.geom.setAttribute( 'color', this.colors.setDynamic(true) );
                   var offset = field.offset;
                   this.getColor = [
                       function(dv,base,le){return dv.getInt8(base+offset,le);},
@@ -60387,7 +60387,7 @@ var MouseHandler = /*@__PURE__*/(function (superclass) {
     var mousePos = new THREE$1.Vector2(deviceX, deviceY);
 
     var mouseRaycaster = new THREE$1.Raycaster();
-    mouseRaycaster.linePrecision = 0.001;
+    mouseRaycaster.params.Line.threshold = 0.001;
     mouseRaycaster.setFromCamera(mousePos, this.camera);
     var mouseRay = mouseRaycaster.ray;
 
