@@ -97,7 +97,7 @@ ROS3D.Marker = function(options) {
       this.add(cylinderMesh);
       break;
     case ROS3D.MARKER_LINE_STRIP:
-      var lineStripGeom = new THREE.Geometry();
+      var lineStripGeom = new THREE.BufferGeometry();
       var lineStripMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
@@ -128,7 +128,7 @@ ROS3D.Marker = function(options) {
       this.add(new THREE.Line(lineStripGeom, lineStripMaterial));
       break;
     case ROS3D.MARKER_LINE_LIST:
-      var lineListGeom = new THREE.Geometry();
+      var lineListGeom = new THREE.BufferGeometry();
       var lineListMaterial = new THREE.LineBasicMaterial({
         size : message.scale.x
       });
@@ -156,7 +156,7 @@ ROS3D.Marker = function(options) {
       }
 
       // add the line
-      this.add(new THREE.Line(lineListGeom, lineListMaterial,THREE.LinePieces));
+      this.add(new THREE.LineSegments(lineListGeom, lineListMaterial));
       break;
     case ROS3D.MARKER_CUBE_LIST:
       // holds the main object
