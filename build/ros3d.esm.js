@@ -6070,7 +6070,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_STRIP:
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : message.scale.x
         });
 
         // add the points
@@ -6098,7 +6098,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_LIST:
         var lineListMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : message.scale.x
         });
 
         // add the points

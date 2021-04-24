@@ -98,7 +98,7 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_LINE_STRIP:
       var lineStripMaterial = new THREE.LineBasicMaterial({
-        size : message.scale.x
+        linewidth : message.scale.x
       });
 
       // add the points
@@ -126,7 +126,7 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_LINE_LIST:
       var lineListMaterial = new THREE.LineBasicMaterial({
-        size : message.scale.x
+        linewidth : message.scale.x
       });
 
       // add the points

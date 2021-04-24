@@ -6120,7 +6120,7 @@ class Marker extends THREE$1.Object3D {
         break;
       case MARKER_LINE_STRIP:
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : message.scale.x
         });
 
         // add the points
@@ -6148,7 +6148,7 @@ class Marker extends THREE$1.Object3D {
         break;
       case MARKER_LINE_LIST:
         var lineListMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : message.scale.x
         });
 
         // add the points
