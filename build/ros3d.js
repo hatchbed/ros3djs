@@ -542,7 +542,7 @@ class Arrow extends THREE$1.Mesh {
     coneGeometry.applyMatrix4(m);
 
     // put the arrow together
-    geometry.merge(coneGeometry);
+    geometry = THREE$1.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
     super(geometry, material);
 

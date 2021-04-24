@@ -41,7 +41,7 @@ ROS3D.Arrow = function(options) {
   coneGeometry.applyMatrix4(m);
 
   // put the arrow together
-  geometry.merge(coneGeometry);
+  geometry = THREE.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
   THREE.Mesh.call(this, geometry, material);
 

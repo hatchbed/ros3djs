@@ -512,7 +512,7 @@ var Arrow = /*@__PURE__*/(function (superclass) {
     coneGeometry.applyMatrix4(m);
 
     // put the arrow together
-    geometry.merge(coneGeometry);
+    geometry = THREE$1.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
     superclass.call(this, geometry, material);
 
