@@ -1,4 +1,4 @@
-var ROS3D = (function (exports,THREE,ROSLIB) {
+var ROS3D = (function (exports,THREE,BufferGeometryUtils_js,ROSLIB) {
 'use strict';
 
 var THREE$1 = Object.assign({}, THREE)
@@ -497,10 +497,6 @@ class DepthCloud extends THREE$1.Object3D {
   };
 }
 
-/**
- * @author David Gossow - dgossow@willowgarage.com
- */
-
 class Arrow extends THREE$1.Mesh {
 
   /**
@@ -542,7 +538,7 @@ class Arrow extends THREE$1.Mesh {
     coneGeometry.applyMatrix4(m);
 
     // put the arrow together
-    geometry = THREE$1.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
+    geometry = BufferGeometryUtils_js.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
     super(geometry, material);
 
@@ -11576,4 +11572,4 @@ exports.Viewer = Viewer;
 
 return exports;
 
-}({},THREE,ROSLIB));
+}({},THREE,BufferGeometryUtils_js,ROSLIB));

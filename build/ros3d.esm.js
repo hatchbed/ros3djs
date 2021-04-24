@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { TFClient, Pose, Transform, Topic, Service, ServiceRequest, URDF_MESH, URDF_BOX, URDF_CYLINDER, URDF_SPHERE, Param, UrdfModel } from 'roslib';
 
 var THREE$1 = Object.assign({}, THREE)
@@ -482,10 +483,6 @@ var DepthCloud = /*@__PURE__*/(function (superclass) {
   return DepthCloud;
 }(THREE$1.Object3D));
 
-/**
- * @author David Gossow - dgossow@willowgarage.com
- */
-
 var Arrow = /*@__PURE__*/(function (superclass) {
   function Arrow(options) {
     options = options || {};
@@ -512,7 +509,7 @@ var Arrow = /*@__PURE__*/(function (superclass) {
     coneGeometry.applyMatrix4(m);
 
     // put the arrow together
-    geometry = THREE$1.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
+    geometry = BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
     superclass.call(this, geometry, material);
 
