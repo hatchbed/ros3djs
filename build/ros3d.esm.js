@@ -9585,7 +9585,7 @@ var Points = /*@__PURE__*/(function (superclass) {
           this.geom = new THREE$1.BufferGeometry();
 
           this.positions = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-          this.geom.setAttribute( 'position', this.positions.setDynamic(true) );
+          this.geom.setAttribute( 'position', this.positions.setUsage(THREE$1.DynamicDrawUsage) );
 
           if(!this.colorsrc && this.fields.rgb) {
               this.colorsrc = 'rgb';
@@ -9594,7 +9594,7 @@ var Points = /*@__PURE__*/(function (superclass) {
               var field = this.fields[this.colorsrc];
               if (field) {
                   this.colors = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-                  this.geom.setAttribute( 'color', this.colors.setDynamic(true) );
+                  this.geom.setAttribute( 'color', this.colors.setUsage(THREE$1.DynamicDrawUsage) );
                   var offset = field.offset;
                   this.getColor = [
                       function(dv,base,le){return dv.getInt8(base+offset,le);},
