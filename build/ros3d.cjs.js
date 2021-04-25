@@ -6074,7 +6074,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_STRIP:
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
-          linewidth : message.scale.x
+          linewidth : Math.max(1.0, message.scale.x)
         });
 
         // add the points
@@ -6102,7 +6102,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_LIST:
         var lineListMaterial = new THREE$1.LineBasicMaterial({
-          linewidth : message.scale.x
+          linewidth : Math.max(1.0, message.scale.x)
         });
 
         // add the points
@@ -9931,7 +9931,7 @@ var Urdf = /*@__PURE__*/(function (superclass) {
                   object : mesh
               });
               sceneNode.name = visual.name;
-              this.add(sceneNode);            
+              this.add(sceneNode);
             } else {
               console.warn('Could not load geometry mesh: '+uri);
             }

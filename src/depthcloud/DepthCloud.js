@@ -237,7 +237,7 @@ ROS3D.DepthCloud.prototype.initStreamer = function() {
   if (this.metaLoaded) {
     this.texture = new THREE.Texture(this.video);
 
-    const points = []
+    const points = [];
     for (var i = 0, l = this.width * this.height; i < l; i++) {
 
       var vertex = new THREE.Vector3();

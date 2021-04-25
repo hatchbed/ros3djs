@@ -24,7 +24,7 @@ ROS3D.TriangleList = function(options) {
   material.side = THREE.DoubleSide;
 
   // construct the geometry
-  const points = []
+  const points = [];
   for (i = 0; i < vertices.length; i++) {
     points.push(new THREE.Vector3(vertices[i].x, vertices[i].y, vertices[i].z));
   }
