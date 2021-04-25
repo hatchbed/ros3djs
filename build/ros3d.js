@@ -1,4 +1,4 @@
-var ROS3D = (function (exports,THREE,ROSLIB) {
+var ROS3D = (function (exports,THREE,BufferGeometryUtils_js,ROSLIB) {
 'use strict';
 
 var THREE$1 = Object.assign({}, THREE)
@@ -497,10 +497,6 @@ class DepthCloud extends THREE$1.Object3D {
   };
 }
 
-/**
- * @author David Gossow - dgossow@willowgarage.com
- */
-
 class Arrow extends THREE$1.Mesh {
 
   /**
@@ -542,7 +538,7 @@ class Arrow extends THREE$1.Mesh {
     coneGeometry.applyMatrix4(m);
 
     // put the arrow together
-    geometry.merge(coneGeometry);
+    geometry = BufferGeometryUtils_js.BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
     super(geometry, material);
 
@@ -6124,7 +6120,7 @@ class Marker extends THREE$1.Object3D {
         break;
       case MARKER_LINE_STRIP:
         var lineStripMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : Math.max(1.0, message.scale.x)
         });
 
         // add the points
@@ -6152,7 +6148,7 @@ class Marker extends THREE$1.Object3D {
         break;
       case MARKER_LINE_LIST:
         var lineListMaterial = new THREE$1.LineBasicMaterial({
-          size : message.scale.x
+          linewidth : Math.max(1.0, message.scale.x)
         });
 
         // add the points
@@ -9916,7 +9912,7 @@ class Points extends THREE$1.Object3D {
           this.geom = new THREE$1.BufferGeometry();
 
           this.positions = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-          this.geom.setAttribute( 'position', this.positions.setDynamic(true) );
+          this.geom.setAttribute( 'position', this.positions.setUsage(THREE$1.DynamicDrawUsage) );
 
           if(!this.colorsrc && this.fields.rgb) {
               this.colorsrc = 'rgb';
@@ -9925,7 +9921,7 @@ class Points extends THREE$1.Object3D {
               var field = this.fields[this.colorsrc];
               if (field) {
                   this.colors = new THREE$1.BufferAttribute( new Float32Array( this.max_pts * 3), 3, false );
-                  this.geom.setAttribute( 'color', this.colors.setDynamic(true) );
+                  this.geom.setAttribute( 'color', this.colors.setUsage(THREE$1.DynamicDrawUsage) );
                   var offset = field.offset;
                   this.getColor = [
                       function(dv,base,le){return dv.getInt8(base+offset,le);},
@@ -10317,7 +10313,7 @@ class Urdf extends THREE$1.Object3D {
                   object : mesh
               });
               sceneNode.name = visual.name;
-              this.add(sceneNode);            
+              this.add(sceneNode);
             } else {
               console.warn('Could not load geometry mesh: '+uri);
             }
@@ -11576,4 +11572,4 @@ exports.Viewer = Viewer;
 
 return exports;
 
-}({},THREE,ROSLIB));
+}({},THREE,BufferGeometryUtils_js,ROSLIB));

@@ -2,6 +2,8 @@
  * @author David Gossow - dgossow@willowgarage.com
  */
 
+import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+
 /**
  * A Arrow is a THREE object that can be used to display an arrow model.
  *
@@ -41,7 +43,7 @@ ROS3D.Arrow = function(options) {
   coneGeometry.applyMatrix4(m);
 
   // put the arrow together
-  geometry.merge(coneGeometry);
+  geometry = BufferGeometryUtils.mergeBufferGeometries([geometry, coneGeometry]);
 
   THREE.Mesh.call(this, geometry, material);
 

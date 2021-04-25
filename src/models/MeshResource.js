@@ -29,7 +29,7 @@ ROS3D.MeshResource = function(options) {
     path += '/';
   }
 
-  var uri = path ? path + resource : resource
+  var uri = path ? path + resource : resource;
   var fileType = uri.substr(-3).toLowerCase();
 
   // check the type
