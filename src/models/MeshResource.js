@@ -15,7 +15,7 @@
  *  * material (optional) - the material to use for the object
  *  * warnings (optional) - if warnings should be printed
  */
-ROS3D.MeshResource = function(options) {
+ROS3D.MeshResource = function(options, onLoad) {
   THREE.Object3D.call(this);
   var that = this;
   options = options || {};
@@ -35,7 +35,7 @@ ROS3D.MeshResource = function(options) {
   // check the type
   var loaderFunc = ROS3D.MeshLoader.loaders[fileType];
   if (loaderFunc) {
-    loaderFunc(this, uri, options);
+    loaderFunc(this, uri, options, onLoad);
   } else {
     console.warn('Unsupported loader for file type: \'' + fileType + '\'');
   }

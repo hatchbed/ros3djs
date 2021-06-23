@@ -5759,7 +5759,7 @@ var MeshLoader = {
      console.error(error);
    },
    loaders: {
-     'dae': function(meshRes, uri, options) {
+     'dae': function(meshRes, uri, options, onLoad) {
        var material = options.material;
        var loader = new THREE$1.ColladaLoader(options.loader);
        loader.log = function(message) {
@@ -5783,13 +5783,16 @@ var MeshLoader = {
            }
 
            meshRes.add(collada.scene);
+           if (onLoad) {
+             onLoad();
+           }
          },
          /*onProgress=*/null,
          MeshLoader.onError);
          return loader;
      },
 
-     'obj': function(meshRes, uri, options) {
+     'obj': function(meshRes, uri, options, onLoad) {
        var material = options.material;
        var loader = new THREE$1.OBJLoader(options.loader);
        loader.log = function(message) {
@@ -5835,6 +5838,9 @@ var MeshLoader = {
            } else {
              // add the container group
              meshRes.add(obj);
+             if (onLoad) {
+               onLoad();
+             }
            }
 
          },
@@ -5844,7 +5850,7 @@ var MeshLoader = {
          return loader;
      },
 
-     'stl': function(meshRes, uri, options) {
+     'stl': function(meshRes, uri, options, onLoad) {
        var material = options.material;
        var loader = new THREE$1.STLLoader(options.loader);
        {
@@ -5859,6 +5865,9 @@ var MeshLoader = {
                                                 new THREE$1.MeshBasicMaterial( { color: 0x999999 } ) );
                        }
                        meshRes.add(mesh);
+                       if (onLoad) {
+                         onLoad();
+                       }
                      },
                      /*onProgress=*/null,
                      MeshLoader.onError);
@@ -5875,7 +5884,7 @@ var MeshLoader = {
  */
 
 var MeshResource = /*@__PURE__*/(function (superclass) {
-  function MeshResource(options) {
+  function MeshResource(options, onLoad) {
     superclass.call(this);
     options = options || {};
     var path = options.path;
@@ -5894,7 +5903,7 @@ var MeshResource = /*@__PURE__*/(function (superclass) {
     // check the type
     var loaderFunc = MeshLoader.loaders[fileType];
     if (loaderFunc) {
-      loaderFunc(this, uri, options);
+      loaderFunc(this, uri, options, onLoad);
     } else {
       console.warn('Unsupported loader for file type: \'' + fileType + '\'');
     }

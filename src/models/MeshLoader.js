@@ -20,7 +20,7 @@ ROS3D.MeshLoader = {
      console.error(error);
    },
    loaders: {
-     'dae': function(meshRes, uri, options) {
+     'dae': function(meshRes, uri, options, onLoad) {
        const material = options.material;
        const loader = new THREE.ColladaLoader(options.loader);
        loader.log = function(message) {
@@ -44,13 +44,16 @@ ROS3D.MeshLoader = {
            }
 
            meshRes.add(collada.scene);
+           if (onLoad) {
+             onLoad();
+           }
          },
          /*onProgress=*/null,
          ROS3D.MeshLoader.onError);
          return loader;
      },
 
-     'obj': function(meshRes, uri, options) {
+     'obj': function(meshRes, uri, options, onLoad) {
        const material = options.material;
        const loader = new THREE.OBJLoader(options.loader);
        loader.log = function(message) {
@@ -96,6 +99,9 @@ ROS3D.MeshLoader = {
            } else {
              // add the container group
              meshRes.add(obj);
+             if (onLoad) {
+               onLoad();
+             }
            }
 
          },
@@ -105,7 +111,7 @@ ROS3D.MeshLoader = {
          return loader;
      },
 
-     'stl': function(meshRes, uri, options) {
+     'stl': function(meshRes, uri, options, onLoad) {
        const material = options.material;
        const loader = new THREE.STLLoader(options.loader);
        {
@@ -120,6 +126,9 @@ ROS3D.MeshLoader = {
                                                 new THREE.MeshBasicMaterial( { color: 0x999999 } ) );
                        }
                        meshRes.add(mesh);
+                       if (onLoad) {
+                         onLoad();
+                       }
                      },
                      /*onProgress=*/null,
                      ROS3D.MeshLoader.onError);
