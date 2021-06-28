@@ -24,6 +24,9 @@
  *  * lineTypePanAndZoomFrame - line type for the frame that is displayed when
  *  *                           panning/zooming. Only has effect when
  *  *                           displayPanAndZoomFrame is set to true.
+ *  * onRender - A function that will be called every time the Viewer's draw
+ *  *            function is called, before we call THREE's render function;
+ *  *            it will be passed the scene and camera as arguments.
  */
 ROS3D.Viewer = function(options) {
   options = options || {};
@@ -45,6 +48,8 @@ ROS3D.Viewer = function(options) {
   var cameraZoomSpeed = options.cameraZoomSpeed || 0.5;
   var displayPanAndZoomFrame = (options.displayPanAndZoomFrame === undefined) ? true : !!options.displayPanAndZoomFrame;
   var lineTypePanAndZoomFrame = options.lineTypePanAndZoomFrame || 'full';
+
+  this.onRender = options.onRender || (() => {});
 
   // create the canvas to render to
   this.renderer = new THREE.WebGLRenderer({
@@ -98,7 +103,7 @@ ROS3D.Viewer = function(options) {
   this.animationRequestId = undefined;
 
   // add the renderer to the page
-  var node = elem || document.getElementById(divID);  
+  var node = elem || document.getElementById(divID);
   node.appendChild(this.renderer.domElement);
 
   // begin the render loop
@@ -130,6 +135,8 @@ ROS3D.Viewer.prototype.draw = function(){
   // attempting to assign to it either does nothing or throws an error.
   //this.directionalLight.position = this.camera.localToWorld(new THREE.Vector3(-1, 1, 0));
   this.directionalLight.position.normalize();
+
+  this.onRender(this.scene, this.camera);
 
   // set the scene
   this.renderer.clear(true, true, true);
