@@ -62923,6 +62923,8 @@ var Viewer = function Viewer(options) {
   var displayPanAndZoomFrame = (options.displayPanAndZoomFrame === undefined) ? true : !!options.displayPanAndZoomFrame;
   var lineTypePanAndZoomFrame = options.lineTypePanAndZoomFrame || 'full';
 
+  this.onRender = options.onRender || (function () {});
+
   // create the canvas to render to
   this.renderer = new THREE.WebGLRenderer({
     antialias : antialias,
@@ -63005,6 +63007,8 @@ Viewer.prototype.draw = function draw (){
   // attempting to assign to it either does nothing or throws an error.
   //this.directionalLight.position = this.camera.localToWorld(new THREE.Vector3(-1, 1, 0));
   this.directionalLight.position.normalize();
+
+  this.onRender(this.scene, this.camera);
 
   // set the scene
   this.renderer.clear(true, true, true);
