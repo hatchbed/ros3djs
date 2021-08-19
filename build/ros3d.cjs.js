@@ -60176,7 +60176,7 @@ InteractiveMarkerClient.prototype.subscribe = function subscribe (topic) {
     ros : this.ros,
     name : topic + '/tunneled/update',
     messageType : 'visualization_msgs/InteractiveMarkerUpdate',
-    compression : 'png'
+    compression : 'cbor'
   });
   this.updateTopic.subscribe(this.processUpdate.bind(this));
 
@@ -60184,7 +60184,7 @@ InteractiveMarkerClient.prototype.subscribe = function subscribe (topic) {
     ros : this.ros,
     name : topic + '/feedback',
     messageType : 'visualization_msgs/InteractiveMarkerFeedback',
-    compression : 'png'
+    compression : 'cbor'
   });
   this.feedbackTopic.advertise();
 
@@ -60420,7 +60420,7 @@ var MarkerArrayClient = /*@__PURE__*/(function (EventEmitter2) {
       ros : this.ros,
       name : this.topicName,
       messageType : 'visualization_msgs/MarkerArray',
-      compression : 'png'
+      compression : 'cbor'
     });
     this.rosTopic.subscribe(this.processMessage.bind(this));
   };
@@ -60537,7 +60537,7 @@ var MarkerClient = /*@__PURE__*/(function (EventEmitter2) {
       ros : this.ros,
       name : this.topicName,
       messageType : 'visualization_msgs/Marker',
-      compression : 'png'
+      compression : 'cbor'
     });
     this.rosTopic.subscribe(this.processMessage.bind(this));
   };

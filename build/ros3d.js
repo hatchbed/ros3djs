@@ -59781,7 +59781,7 @@ var ROS3D = (function (exports, ROSLIB) {
 	      ros : this.ros,
 	      name : topic + '/tunneled/update',
 	      messageType : 'visualization_msgs/InteractiveMarkerUpdate',
-	      compression : 'png'
+	      compression : 'cbor'
 	    });
 	    this.updateTopic.subscribe(this.processUpdate.bind(this));
 
@@ -59789,7 +59789,7 @@ var ROS3D = (function (exports, ROSLIB) {
 	      ros : this.ros,
 	      name : topic + '/feedback',
 	      messageType : 'visualization_msgs/InteractiveMarkerFeedback',
-	      compression : 'png'
+	      compression : 'cbor'
 	    });
 	    this.feedbackTopic.advertise();
 
@@ -60052,7 +60052,7 @@ var ROS3D = (function (exports, ROSLIB) {
 	      ros : this.ros,
 	      name : this.topicName,
 	      messageType : 'visualization_msgs/MarkerArray',
-	      compression : 'png'
+	      compression : 'cbor'
 	    });
 	    this.rosTopic.subscribe(this.processMessage.bind(this));
 	  };
@@ -60187,7 +60187,7 @@ var ROS3D = (function (exports, ROSLIB) {
 	      ros : this.ros,
 	      name : this.topicName,
 	      messageType : 'visualization_msgs/Marker',
-	      compression : 'png'
+	      compression : 'cbor'
 	    });
 	    this.rosTopic.subscribe(this.processMessage.bind(this));
 	  };
