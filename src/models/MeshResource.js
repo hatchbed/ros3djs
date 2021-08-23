@@ -29,7 +29,14 @@ ROS3D.MeshResource = function(options, onLoad) {
     path += '/';
   }
 
-  var uri = path ? path + resource : resource;
+  var uri = null;
+  if (resource.startsWith('http://') || resource.startsWith('https://')) {
+    // Don't prepend the path if our resource has an http(s):// in front of it
+    uri = resource;
+  }
+  else {
+    uri = path ? path + resource : resource;
+  }
   var fileType = uri.substr(-3).toLowerCase();
 
   // check the type

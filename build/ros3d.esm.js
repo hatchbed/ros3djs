@@ -5883,7 +5883,14 @@ var MeshResource = /*@__PURE__*/(function (superclass) {
       path += '/';
     }
 
-    var uri = path ? path + resource : resource;
+    var uri = null;
+    if (resource.startsWith('http://') || resource.startsWith('https://')) {
+      // Don't prepend the path if our resource has an http(s):// in front of it
+      uri = resource;
+    }
+    else {
+      uri = path ? path + resource : resource;
+    }
     var fileType = uri.substr(-3).toLowerCase();
 
     // check the type
@@ -10825,11 +10832,6 @@ var Urdf = /*@__PURE__*/(function (superclass) {
             var tmpIndex = uri.indexOf('package://');
             if (tmpIndex !== -1) {
               uri = uri.substr(tmpIndex + ('package://').length);
-            }
-            if (uri.startsWith('http://') || uri.startsWith('https://')) {
-              // If the URI is actually a full URL, this doesn't need a path, and setting one
-              // will mess up the mesh loader, so explicitly remove it.
-              path = null;
             }
             var fileType = uri.substr(-3).toLowerCase();
 
