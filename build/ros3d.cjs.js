@@ -10853,6 +10853,11 @@ var Urdf = /*@__PURE__*/(function (superclass) {
             if (tmpIndex !== -1) {
               uri = uri.substr(tmpIndex + ('package://').length);
             }
+            if (uri.startsWith('http://') || uri.startsWith('https://')) {
+              // If the URI is actually a full URL, this doesn't need a path, and setting one
+              // will mess up the mesh loader, so explicitly remove it.
+              path = null;
+            }
             var fileType = uri.substr(-3).toLowerCase();
 
             if (MeshLoader.loaders[fileType]) {
