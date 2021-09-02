@@ -6052,6 +6052,10 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
       lineWidth: scale,
       sizeAttenuation: true,
       color: new THREE.Color(color.r, color.g, color.b),
+      transparent: color.a <= 1.0,
+      depthTest: true,
+      opacity: color.a,
+      blending: THREE.NormalBlending,
     });
 
     const meshLines = [];
@@ -6074,6 +6078,10 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
       lineWidth: scale,
       sizeAttenuation: true,
       color: new THREE.Color(color.r, color.g, color.b),
+      transparent: color.a <= 1.0,
+      depthTest: true,
+      opacity: color.a,
+      blending: THREE.NormalBlending,
     });
 
     // add the points
