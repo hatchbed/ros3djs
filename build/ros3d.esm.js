@@ -5994,13 +5994,13 @@ function createMeshLineList(points, scale, color) {
 
   var meshLines = [];
   var k;
-  for ( k = 0; k < (points.length+1); k +=2) {
-    var points$1 = [
-      new THREE.Vector3(points$1[k].x, points$1[k].y, points$1[k].z),
-      new THREE.Vector3(points$1[k+1].x, points$1[k+1].y, points$1[k+1].z)
+  for (k = 0; k < (points.length+1); k +=2) {
+    var segmentPoints = [
+      new THREE.Vector3(points[k].x, points[k].y, points[k].z),
+      new THREE.Vector3(points[k+1].x, points[k+1].y, points[k+1].z)
     ];
     var line = new MeshLine();
-    line.setPoints(points$1);
+    line.setPoints(segmentPoints);
     meshLines.push(new THREE.Mesh(line, lineListMaterial));
   }
 

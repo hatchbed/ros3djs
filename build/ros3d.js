@@ -6056,13 +6056,13 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
 
     const meshLines = [];
     let k;
-    for ( k = 0; k < (points.length+1); k +=2) {
-      const points = [
+    for (k = 0; k < (points.length+1); k +=2) {
+      const segmentPoints = [
         new THREE.Vector3(points[k].x, points[k].y, points[k].z),
         new THREE.Vector3(points[k+1].x, points[k+1].y, points[k+1].z)
       ];
       const line = new three_meshline.MeshLine();
-      line.setPoints(points);
+      line.setPoints(segmentPoints);
       meshLines.push(new THREE.Mesh(line, lineListMaterial));
     }
 
