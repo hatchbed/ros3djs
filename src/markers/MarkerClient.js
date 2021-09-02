@@ -27,6 +27,7 @@ ROS3D.MarkerClient = function(options) {
   this.rootObject = options.rootObject || new THREE.Object3D();
   this.path = options.path || '';
   this.lifetime = options.lifetime || 0;
+  this.useMeshLine = options.useMeshLine || false;
 
   // Markers that are displayed (Map ns+id--Marker)
   this.markers = {};
@@ -83,6 +84,7 @@ ROS3D.MarkerClient.prototype.processMessage = function(message){
     var newMarker = new ROS3D.Marker({
       message : message,
       path : this.path,
+      useMeshLine : this.useMeshLine,
     });
 
     this.markers[message.ns + message.id] = new ROS3D.SceneNode({
