@@ -5989,29 +5989,29 @@ function createMeshLineList(points, scale, color) {
   var lineListMaterial = new MeshLineMaterial({
     lineWidth: scale,
     sizeAttenuation: true,
+    color: new THREE.Color(color.r, color.g, color.b),
   });
 
-  var lineList = new MeshLine();
-
-  // add the points
-  var list_points = [];
+  var meshLines = [];
   var k;
-  for ( k = 0; k < points.length; k++) {
-    list_points.push(new THREE.Vector3(points[k].x, points[k].y, points[k].z));
+  for ( k = 0; k < (points.length+1); k +=2) {
+    var points$1 = [
+      new THREE.Vector3(points$1[k].x, points$1[k].y, points$1[k].z),
+      new THREE.Vector3(points$1[k+1].x, points$1[k+1].y, points$1[k+1].z)
+    ];
+    var line = new MeshLine();
+    line.setPoints(points$1);
+    meshLines.push(new THREE.Mesh(line, lineListMaterial));
   }
 
-  var c = new THREE.Color();
-  c.setRGB(color.r, color.g, color.b);
-  lineListMaterial.color = c;
-  lineList.setPoints(list_points);
-
-  return new THREE.Mesh(lineList, lineListMaterial);
+  return meshLines;
 }
 
 function createMeshLineStrip(points, scale, color) {
   var lineStripMaterial = new MeshLineMaterial({
     lineWidth: scale,
     sizeAttenuation: true,
+    color: new THREE.Color(color.r, color.g, color.b),
   });
 
   // add the points
@@ -6022,11 +6022,7 @@ function createMeshLineStrip(points, scale, color) {
   }
 
   var lineStrip = new MeshLine();
-
-  var lineStripColor = new THREE.Color();
-  lineStripColor.setRGB(color.r, color.g, color.b);
   lineStrip.setPoints(strip_points);
-  lineStripMaterial.color = lineStripColor;
 
   // add the line
   return new THREE.Mesh(lineStrip, lineStripMaterial);
