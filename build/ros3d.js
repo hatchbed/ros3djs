@@ -6254,7 +6254,7 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
           break;
         case MARKER_LINE_LIST:
           if (options.useMeshLine) {
-            this.add(createMeshLineList(message.points, message.scale.x, message.color));
+            createMeshLineList(message.points, message.scale.x, message.color).forEach(segment => this.add(segment));
           }
           else {
             this.add(createLineSegments(message.points, message.scale.x, message.colors, message.color));

@@ -6089,6 +6089,8 @@ function createLine(points, scale, colors, color) {
 
 var Marker = /*@__PURE__*/(function (superclass) {
   function Marker(options) {
+    var this$1$1 = this;
+
     superclass.call(this);
 
     options = options || {};
@@ -6182,7 +6184,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_LIST:
         if (options.useMeshLine) {
-          this.add(createMeshLineList(message.points, message.scale.x, message.color));
+          createMeshLineList(message.points, message.scale.x, message.color).forEach(function (segment) { return this$1$1.add(segment); });
         }
         else {
           this.add(createLineSegments(message.points, message.scale.x, message.colors, message.color));
