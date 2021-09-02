@@ -5990,6 +5990,10 @@ function createMeshLineList(points, scale, color) {
     lineWidth: scale,
     sizeAttenuation: true,
     color: new THREE.Color(color.r, color.g, color.b),
+    transparent: color.a <= 0.0,
+    depthTest: color.a >= 1.0,
+    opacity: color.a,
+    blending: THREE.NormalBlending,
   });
 
   var meshLines = [];
@@ -6012,6 +6016,10 @@ function createMeshLineStrip(points, scale, color) {
     lineWidth: scale,
     sizeAttenuation: true,
     color: new THREE.Color(color.r, color.g, color.b),
+    transparent: color.a <= 0.0,
+    depthTest: color.a >= 1.0,
+    opacity: color.a,
+    blending: THREE.NormalBlending,
   });
 
   // add the points
