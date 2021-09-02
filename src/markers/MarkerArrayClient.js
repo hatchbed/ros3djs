@@ -26,6 +26,7 @@ ROS3D.MarkerArrayClient = function(options) {
   this.tfClient = options.tfClient;
   this.rootObject = options.rootObject || new THREE.Object3D();
   this.path = options.path;
+  this.useMeshLine = options.useMeshLine || false;
 
   // Markers that are displayed (Map ns+id--Marker)
   this.markers = {};
@@ -62,6 +63,7 @@ ROS3D.MarkerArrayClient.prototype.processMessage = function(arrayMessage){
         var newMarker = new ROS3D.Marker({
           message : message,
           path : this.path,
+          useMeshLine : this.useMeshLine,
         });
         this.markers[message.ns + message.id] = new ROS3D.SceneNode({
           frameID : message.header.frame_id,

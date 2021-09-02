@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var THREE$1 = require('three');
 var ROSLIB = require('roslib');
 var BufferGeometryUtils_js = require('three/examples/jsm/utils/BufferGeometryUtils.js');
+var three_meshline = require('three.meshline');
 
 function _interopNamespace(e) {
   if (e && e.__esModule) return e;
@@ -5910,7 +5911,14 @@ var MeshResource = /*@__PURE__*/(function (superclass) {
       path += '/';
     }
 
-    var uri = path ? path + resource : resource;
+    var uri = null;
+    if (resource.startsWith('http://') || resource.startsWith('https://')) {
+      // Don't prepend the path if our resource has an http(s):// in front of it
+      uri = resource;
+    }
+    else {
+      uri = path ? path + resource : resource;
+    }
     var fileType = uri.substr(-3).toLowerCase();
 
     // check the type
@@ -6004,13 +6012,112 @@ var TriangleList = /*@__PURE__*/(function (superclass) {
   return TriangleList;
 }(THREE.Object3D));
 
-/**
- * @author David Gossow - dgossow@willowgarage.com
- * @author Russell Toris - rctoris@wpi.edu
- */
+function createMeshLineList(points, scale, color) {
+  var lineListMaterial = new three_meshline.MeshLineMaterial({
+    lineWidth: scale,
+    sizeAttenuation: true,
+    color: new THREE.Color(color.r, color.g, color.b),
+  });
+
+  var meshLines = [];
+  var k;
+  for (k = 0; k < (points.length-1); k +=2) {
+    var segmentPoints = [
+      new THREE.Vector3(points[k].x, points[k].y, points[k].z),
+      new THREE.Vector3(points[k+1].x, points[k+1].y, points[k+1].z)
+    ];
+    var line = new three_meshline.MeshLine();
+    line.setPoints(segmentPoints);
+    meshLines.push(new THREE.Mesh(line, lineListMaterial));
+  }
+
+  return meshLines;
+}
+
+function createMeshLineStrip(points, scale, color) {
+  var lineStripMaterial = new three_meshline.MeshLineMaterial({
+    lineWidth: scale,
+    sizeAttenuation: true,
+    color: new THREE.Color(color.r, color.g, color.b),
+  });
+
+  // add the points
+  var strip_points = [];
+  var j;
+  for ( j = 0; j < points.length; j++) {
+    strip_points.push(new THREE.Vector3(points[j].x, points[j].y, points[j].z));
+  }
+
+  var lineStrip = new three_meshline.MeshLine();
+  lineStrip.setPoints(strip_points);
+
+  // add the line
+  return new THREE.Mesh(lineStrip, lineStripMaterial);
+}
+
+function createLineSegments(points, scale, colors, color) {
+  var lineListMaterial = new THREE.LineBasicMaterial({
+    linewidth : Math.max(1.0, scale)
+  });
+
+  new three_meshline.MeshLine();
+
+  // add the points
+  var list_points = [];
+  var k;
+  for ( k = 0; k < points.length; k++) {
+    list_points.push(new THREE.Vector3(points[k].x, points[k].y, points[k].z));
+  }
+  var lineListGeom = new THREE.BufferGeometry().setFromPoints(list_points);
+
+  // determine the colors for each
+  if (colors.length === points.length) {
+    lineListMaterial.vertexColors = true;
+    for ( k = 0; k < points.length; k++) {
+      var c = new THREE.Color();
+      c.setRGB(colors[k].r, colors[k].g, colors[k].b);
+      lineListGeom.colors.push(c);
+    }
+  } else {
+    lineListMaterial.color.setRGB(color.r, color.g, color.b);
+  }
+
+  // add the line
+  return new THREE.LineSegments(lineListGeom, lineListMaterial);
+}
+
+function createLine(points, scale, colors, color) {
+  var lineStripMaterial = new THREE.LineBasicMaterial({
+    linewidth : Math.max(1.0, scale)
+  });
+
+  // add the points
+  var strip_points = [];
+  var j;
+  for ( j = 0; j < points.length; j++) {
+    strip_points.push(new THREE.Vector3(points[j].x, points[j].y, points[j].z));
+  }
+  var lineStripGeom = new THREE.BufferGeometry().setFromPoints(strip_points);
+
+  // determine the colors for each
+  if (colors.length === points.length) {
+    lineStripMaterial.vertexColors = true;
+    for ( j = 0; j < points.length; j++) {
+      var clr = new THREE.Color();
+      clr.setRGB(colors[j].r, colors[j].g, colors[j].b);
+      lineStripGeom.colors.push(clr);
+    }
+  } else {
+    lineStripMaterial.color.setRGB(color.r, color.g, color.b);
+  }
+
+  return new THREE.Line(lineStripGeom, lineStripMaterial);
+}
 
 var Marker = /*@__PURE__*/(function (superclass) {
   function Marker(options) {
+    var this$1$1 = this;
+
     superclass.call(this);
 
     options = options || {};
@@ -6095,60 +6202,20 @@ var Marker = /*@__PURE__*/(function (superclass) {
         this.add(cylinderMesh);
         break;
       case MARKER_LINE_STRIP:
-        var lineStripMaterial = new THREE.LineBasicMaterial({
-          linewidth : Math.max(1.0, message.scale.x)
-        });
-
-        // add the points
-        var strip_points = [];
-        var j;
-        for ( j = 0; j < message.points.length; j++) {
-          strip_points.push(new THREE.Vector3(message.points[j].x, message.points[j].y, message.points[j].z));
+        if (options.useMeshLine) {
+          this.add(createMeshLineStrip(message.points, message.scale.x, message.color));
         }
-        var lineStripGeom = new THREE.BufferGeometry().setFromPoints(strip_points);
-
-        // determine the colors for each
-        if (message.colors.length === message.points.length) {
-          lineStripMaterial.vertexColors = true;
-          for ( j = 0; j < message.points.length; j++) {
-            var clr = new THREE.Color();
-            clr.setRGB(message.colors[j].r, message.colors[j].g, message.colors[j].b);
-            lineStripGeom.colors.push(clr);
-          }
-        } else {
-          lineStripMaterial.color.setRGB(message.color.r, message.color.g, message.color.b);
+        else {
+          this.add(createLine(message.points, message.scale.x, message.colors, message.color));
         }
-
-        // add the line
-        this.add(new THREE.Line(lineStripGeom, lineStripMaterial));
         break;
       case MARKER_LINE_LIST:
-        var lineListMaterial = new THREE.LineBasicMaterial({
-          linewidth : Math.max(1.0, message.scale.x)
-        });
-
-        // add the points
-        var list_points = [];
-        var k;
-        for ( k = 0; k < message.points.length; k++) {
-          list_points.push(new THREE.Vector3(message.points[k].x, message.points[k].y, message.points[k].z));
+        if (options.useMeshLine) {
+          createMeshLineList(message.points, message.scale.x, message.color).forEach(function (segment) { return this$1$1.add(segment); });
         }
-        var lineListGeom = new THREE.BufferGeometry().setFromPoints(list_points);
-
-        // determine the colors for each
-        if (message.colors.length === message.points.length) {
-          lineListMaterial.vertexColors = true;
-          for ( k = 0; k < message.points.length; k++) {
-            var c = new THREE.Color();
-            c.setRGB(message.colors[k].r, message.colors[k].g, message.colors[k].b);
-            lineListGeom.colors.push(c);
-          }
-        } else {
-          lineListMaterial.color.setRGB(message.color.r, message.color.g, message.color.b);
+        else {
+          this.add(createLineSegments(message.points, message.scale.x, message.colors, message.color));
         }
-
-        // add the line
-        this.add(new THREE.LineSegments(lineListGeom, lineListMaterial));
         break;
       case MARKER_CUBE_LIST:
         // holds the main object
@@ -9323,6 +9390,7 @@ var MarkerArrayClient = /*@__PURE__*/(function (EventEmitter2) {
     this.tfClient = options.tfClient;
     this.rootObject = options.rootObject || new THREE.Object3D();
     this.path = options.path;
+    this.useMeshLine = options.useMeshLine || false;
 
     // Markers that are displayed (Map ns+id--Marker)
     this.markers = {};
@@ -9360,6 +9428,7 @@ var MarkerArrayClient = /*@__PURE__*/(function (EventEmitter2) {
           var newMarker = new Marker({
             message : message,
             path : this.path,
+            useMeshLine : this.useMeshLine,
           });
           this.markers[message.ns + message.id] = new SceneNode({
             frameID : message.header.frame_id,
@@ -9423,6 +9492,7 @@ var MarkerClient = /*@__PURE__*/(function (EventEmitter2) {
     this.rootObject = options.rootObject || new THREE.Object3D();
     this.path = options.path || '';
     this.lifetime = options.lifetime || 0;
+    this.useMeshLine = options.useMeshLine || false;
 
     // Markers that are displayed (Map ns+id--Marker)
     this.markers = {};
@@ -9478,6 +9548,7 @@ var MarkerClient = /*@__PURE__*/(function (EventEmitter2) {
       var newMarker = new Marker({
         message : message,
         path : this.path,
+        useMeshLine : this.useMeshLine,
       });
 
       this.markers[message.ns + message.id] = new SceneNode({
@@ -10852,11 +10923,6 @@ var Urdf = /*@__PURE__*/(function (superclass) {
             var tmpIndex = uri.indexOf('package://');
             if (tmpIndex !== -1) {
               uri = uri.substr(tmpIndex + ('package://').length);
-            }
-            if (uri.startsWith('http://') || uri.startsWith('https://')) {
-              // If the URI is actually a full URL, this doesn't need a path, and setting one
-              // will mess up the mesh loader, so explicitly remove it.
-              path = null;
             }
             var fileType = uri.substr(-3).toLowerCase();
 
