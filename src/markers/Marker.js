@@ -3,7 +3,7 @@
  * @author Russell Toris - rctoris@wpi.edu
  */
 
-import { MeshLine, MeshLineMaterial, MeshLineRaycast } from 'three.meshline';
+import { MeshLine, MeshLineMaterial } from 'three.meshline';
 
 /**
  * A Marker can convert a ROS marker message into a THREE object.
