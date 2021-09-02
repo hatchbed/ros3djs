@@ -100,7 +100,7 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_LINE_STRIP:
       const lineStripMaterial = new MeshLineMaterial({
-        lineWidth: Math.max(1.0, message.scale.x),
+        lineWidth: message.scale.x,
         sizeAttenuation: true,
       });
       //   new THREE.LineBasicMaterial({
@@ -145,7 +145,7 @@ ROS3D.Marker = function(options) {
       break;
     case ROS3D.MARKER_LINE_LIST:
       const lineListMaterial = new MeshLineMaterial({
-        lineWidth: Math.max(1.0, message.scale.x),
+        lineWidth: message.scale.x,
         sizeAttenuation: true,
       });
       // var lineListMaterial = new THREE.LineBasicMaterial({

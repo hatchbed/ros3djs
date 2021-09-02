@@ -6144,7 +6144,7 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
           break;
         case MARKER_LINE_STRIP:
           const lineStripMaterial = new three_meshline.MeshLineMaterial({
-            lineWidth: Math.max(1.0, message.scale.x),
+            lineWidth: message.scale.x,
             sizeAttenuation: true,
           });
           //   new THREE.LineBasicMaterial({
@@ -6189,7 +6189,7 @@ var ROS3D = (function (exports, THREE$1, ROSLIB, BufferGeometryUtils_js, three_m
           break;
         case MARKER_LINE_LIST:
           const lineListMaterial = new three_meshline.MeshLineMaterial({
-            lineWidth: Math.max(1.0, message.scale.x),
+            lineWidth: message.scale.x,
             sizeAttenuation: true,
           });
           // var lineListMaterial = new THREE.LineBasicMaterial({

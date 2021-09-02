@@ -6099,7 +6099,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_STRIP:
         var lineStripMaterial = new three_meshline.MeshLineMaterial({
-          lineWidth: Math.max(1.0, message.scale.x),
+          lineWidth: message.scale.x,
           sizeAttenuation: true,
         });
         //   new THREE.LineBasicMaterial({
@@ -6144,7 +6144,7 @@ var Marker = /*@__PURE__*/(function (superclass) {
         break;
       case MARKER_LINE_LIST:
         var lineListMaterial = new three_meshline.MeshLineMaterial({
-          lineWidth: Math.max(1.0, message.scale.x),
+          lineWidth: message.scale.x,
           sizeAttenuation: true,
         });
         // var lineListMaterial = new THREE.LineBasicMaterial({
